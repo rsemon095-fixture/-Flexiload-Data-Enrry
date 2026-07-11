@@ -3,7 +3,23 @@ import { rtdb } from "./firebase.js";
 import {
   ref,
   onValue
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+} 
+if((data.gp||0)<500){
+alert("🔴 GP ব্যালেন্স ৫০০ টাকার নিচে।");
+}
+
+if((data.robi||0)<500){
+alert("🔴 Robi ব্যালেন্স ৫০০ টাকার নিচে।");
+}
+
+if((data.banglalink||0)<500){
+alert("🔴 Banglalink ব্যালেন্স ৫০০ টাকার নিচে।");
+}
+
+if((data.airtel||0)<500){
+alert("🔴 Airtel ব্যালেন্স ৫০০ টাকার নিচে।");
+}
+  from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const balanceRef = ref(rtdb, "balance");
 
