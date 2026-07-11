@@ -1,5 +1,13 @@
 import { saveBalance } from "./firebase-balance.js";
 
+const params = new URLSearchParams(window.location.search);
+const op = params.get("op");
+
+if (op) {
+    document.getElementById("selectedOperator").innerHTML =
+        "Operator : " + op;
+}
+
 function saveBalanceData() {
 
     let gp = parseFloat(document.getElementById("gp").value) || 0;
@@ -14,12 +22,11 @@ function saveBalanceData() {
         airtel: airtel
     };
 
-    // Firebase Save
     saveBalance(data);
 
     alert("✅ Balance Save হয়েছে");
 
-window.location.href = "../dashboard.html";
+    window.location.href = "../dashboard.html";
 }
 
 window.saveBalance = saveBalanceData;
