@@ -44,3 +44,21 @@ onValue(balanceRef, (snapshot) => {
     }
 
 });
+import {
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+onValue(ref(rtdb,"sellHistory"),(snapshot)=>{
+
+let profit=0;
+
+snapshot.forEach((item)=>{
+
+profit+=Number(item.val().profit||0);
+
+});
+
+document.getElementById("todayProfit").innerHTML="৳"+profit;
+
+});
