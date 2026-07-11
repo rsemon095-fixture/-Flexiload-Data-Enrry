@@ -1,95 +1,63 @@
-// Balance Load
-let balance = JSON.parse(localStorage.getItem("flexiloadBalance")) || {
-    gp: 0,
-    robi: 0,
-    banglalink: 0,
-    airtel: 0
-};
+import { rtdb } from "./firebase.js";
 
-// Transaction Load
-let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+import {
+ref,
+get,
+update,
+push
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-function saveSell() {
+document.getElementById("sellBtn").onclick = async ()=>{
 
-    const operator = document.getElementById("operator").value;
-    const number = document.getElementById("number").value.trim();
-    const amount = Number(document.getElementById("amount").value);
-    const cash = Number(document.getElementById("cash").value);
+const op=document.getElementById("operator").value;
 
-    if (number.length != 11) {
-        alert("সঠিক মোবাইল নাম্বার লিখুন");
-        return;
-    }
+const sell=Number(document.getElementById("sellAmount").value);
 
-    if (amount <= 0 || cash <= 0) {
-        alert("টাকার পরিমাণ লিখুন");
-        return;
-    }
+const profit=Number(document.getElementById("profit").value);
 
-    if (balance[operator] < amount) {
-        alert("❌ পর্যাপ্ত ব্যালেন্স নেই");
-        return;
-    }
+if(sell<=0){
 
-    // Balance কমানো
-    balance[operator] -= amount;
+alert("Sell Amount লিখুন");
 
-    // Profit হিসাব
-    let profit = cash - amount;
+return;
 
-    let message = "";
+}
 
-    if (profit > 0) {
-        message = "🟢 আলহামদুলিল্লাহ! লাভ হয়েছে।";
-    } else if (profit == 0) {
-        message = "🟡 হিসাব বরাবর।";
-    } else {
-        message = "🔴 লাভ হয়নি, লোকসান হয়েছে।";
-    }
+const snap=await get(ref(rtdb,"balance"));
 
-    // Date & Time
-    const now = new Date();
+const data=snap.val()||{};
 
-    const date =
-        now.toLocaleDateString("en-GB");
+data.gp=Number(data.gp||0);
+data.robi=Number(data.robi||0);
+data.banglalink=Number(data.banglalink||0);
+data.airtel=Number(data.airtel||0);
 
-    const time =
-        now.toLocaleTimeString();
+if(data[op]<sell){
 
-    // Transaction Save
-    transactions.push({
+alert("❌ পর্যাপ্ত ব্যালেন্স নেই");
 
-        operator,
+return;
 
-        number,
+}
 
-        amount,
+data[op]-=sell;
 
-        cash,
+await update(ref(rtdb,"balance"),data);
 
-        profit,
+await push(ref(rtdb,"sellHistory"),{
 
-        date,
+operator:op,
 
-        time
+amount:sell,
 
-    });
+profit:profit,
 
-    localStorage.setItem(
-        "flexiloadBalance",
-        JSON.stringify(balance)
-    );
+date:new Date().toLocaleString()
 
-    localStorage.setItem(
-        "transactions",
-        JSON.stringify(transactions)
-    );
+});
 
-    alert(
-        message +
-        "\n\nProfit/Loss : ৳" + profit
-    );
+alert("✅ Sell Saved");
 
-    location.href = "dashboard.html";
+location.href="../dashboard.html";
 
 }
