@@ -1,5 +1,5 @@
-// Loading শেষ হলে PIN Page-এ যাবে
+setTimeout(function(){
 
-setTimeout(function () {
-    window.location.href = "pin.html";
-}, 3000);
+window.location.href="dashboard.html";
+
+},3000);
