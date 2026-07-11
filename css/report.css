@@ -1,0 +1,40 @@
+body{
+background:#0f172a;
+font-family:Arial;
+margin:0;
+padding:20px;
+color:#fff;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+margin-bottom:15px;
+border-radius:15px;
+text-align:center;
+}
+
+.card h1{
+color:#00e676;
+}
+
+.history-card{
+background:#1e293b;
+padding:15px;
+margin-top:10px;
+border-radius:12px;
+}
+
+.history-card h3{
+margin:0;
+}
+
+.history-card p{
+margin:5px 0;
+color:#ddd;
+}
