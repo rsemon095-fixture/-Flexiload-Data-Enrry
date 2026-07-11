@@ -1,23 +1,68 @@
 let percent = 0;
 
-const text = document.getElementById("percent");
+const percentText = document.getElementById("percent");
+const fill = document.getElementById("loadingFill");
+
+const loadingText = document.querySelector(".loading-text");
+
+const textList = [
+
+"Initializing System...",
+
+"Loading Database...",
+
+"Connecting Firebase...",
+
+"Loading Dashboard...",
+
+"Almost Ready..."
+
+];
+
+let txt = 0;
 
 const timer = setInterval(() => {
 
     percent++;
 
-    text.innerHTML = percent + "%";
+    fill.style.width = percent + "%";
 
-    if (percent >= 100) {
+    percentText.innerHTML = percent + "%";
 
-        clearInterval(timer);
+    if(percent==20){
 
-        setTimeout(() => {
-
-            window.location.href = "dashboard.html";
-
-        }, 400);
+        loadingText.innerHTML=textList[1];
 
     }
 
-}, 30);
+    if(percent==40){
+
+        loadingText.innerHTML=textList[2];
+
+    }
+
+    if(percent==60){
+
+        loadingText.innerHTML=textList[3];
+
+    }
+
+    if(percent==80){
+
+        loadingText.innerHTML=textList[4];
+
+    }
+
+    if(percent>=100){
+
+        clearInterval(timer);
+
+        setTimeout(()=>{
+
+            window.location.href="dashboard.html";
+
+        },500);
+
+    }
+
+},30);
