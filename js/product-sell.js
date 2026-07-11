@@ -1,100 +1,95 @@
-let products =
-JSON.parse(localStorage.getItem("products")) || [];
+import { rtdb } from "./firebase.js";
 
-let history =
-JSON.parse(localStorage.getItem("productHistory")) || [];
+import {
+ref,
+onValue,
+push,
+set,
+update
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-let select =
-document.getElementById("product");
+const productRef = ref(rtdb, "products");
 
-// Product Load
-products.forEach((p,i)=>{
+const select = document.getElementById("productSelect");
 
-select.innerHTML+=`
-<option value="${i}">
-${p.name}
-</option>
-`;
+let products = {};
+
+onValue(productRef, (snapshot) => {
+
+products = snapshot.val() || {};
+
+select.innerHTML = "";
+
+Object.keys(products).forEach(key => {
+
+let op = document.createElement("option");
+
+op.value = key;
+
+op.textContent = products[key].name;
+
+select.appendChild(op);
 
 });
 
-function sellProduct(){
+});
 
-let id =
-document.getElementById("product").value;
+document.getElementById("sellBtn").onclick = async () => {
 
-let qty =
-parseInt(document.getElementById("qty").value);
+let id = select.value;
 
-let cash =
-parseFloat(document.getElementById("cash").value);
+let qty = Number(document.getElementById("qty").value);
+
+let sell = Number(document.getElementById("sellPrice").value);
+
+if (!id || qty <= 0) {
+alert("তথ্য পূরণ করুন");
+return;
+}
 
 let p = products[id];
 
-if(qty<=0){
-
-alert("Quantity লিখুন");
-
+if (qty > p.stock) {
+alert("স্টক পর্যাপ্ত নেই");
 return;
-
 }
 
-if(p.stock<qty){
+let profit = (sell - p.buyPrice) * qty;
 
-alert("❌ Stock নেই");
+await update(ref(rtdb, "products/" + id), {
 
-return;
-
-}
-
-let totalBuy =
-p.buy*qty;
-
-let profit =
-cash-totalBuy;
-
-p.stock-=qty;
-
-history.push({
-
-name:p.name,
-
-qty:qty,
-
-cash:cash,
-
-profit:profit,
-
-date:new Date().toLocaleDateString(),
-
-time:new Date().toLocaleTimeString()
+stock: p.stock - qty
 
 });
 
-localStorage.setItem(
-"products",
-JSON.stringify(products)
-);
+await set(push(ref(rtdb, "productHistory")), {
 
-localStorage.setItem(
-"productHistory",
-JSON.stringify(history)
-);
+name: p.name,
 
-if(profit>0){
+qty,
 
-alert("🟢 আলহামদুলিল্লাহ!\nলাভ হয়েছে\n৳"+profit);
+buyPrice: p.buyPrice,
 
-}else if(profit==0){
+sellPrice: sell,
+
+profit,
+
+date: new Date().toLocaleString()
+
+});
+
+if (profit > 0) {
+
+alert("🟢 আলহামদুলিল্লাহ! লাভ হয়েছে");
+
+} else if (profit === 0) {
 
 alert("🟡 হিসাব বরাবর");
 
-}else{
+} else {
 
-alert("🔴 লাভ হয়নি\nলোকসান ৳"+Math.abs(profit));
-
-}
-
-location.reload();
+alert("🔴 লাভ হয়নি, লোকসান হয়েছে");
 
 }
+
+};
