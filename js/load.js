@@ -44,7 +44,7 @@ old = Number(snap.val());
 const total = old + amount;
 
 await set(balanceRef,total);
-
+console.log("Saved:", op, total);
 await push(ref(rtdb,"history/load"),{
 
 operator:op,
