@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Product History</title>
+<title>History</title>
 
-<link rel="stylesheet" href="../css/product-history.css">
+<link rel="stylesheet" href="../css/load.css">
 
 </head>
 
@@ -15,19 +16,20 @@
 
 <div class="container">
 
-<h2>📜 Product Sell History</h2>
-
-<input
-type="text"
-id="search"
-placeholder="Product Name লিখুন..."
-onkeyup="searchHistory()">
+<h2>📜 Transaction History</h2>
 
 <div id="historyList"></div>
 
+<button onclick="location.href='../dashboard.html'">
+
+⬅ Dashboard
+
+</button>
+
 </div>
 
-<script src="../js/product-history.js"></script>
+<script type="module" src="../js/history.js"></script>
 
 </body>
-  </html>
+
+</html>
