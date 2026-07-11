@@ -3,49 +3,52 @@ import { rtdb } from "./firebase.js";
 import {
 ref,
 onValue
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-let total=0;
+onValue(ref(rtdb,"balance"),(snap)=>{
 
-onValue(ref(rtdb,"productHistory"),(snapshot)=>{
+const d=snap.val()||{};
 
-let data=snapshot.val();
+const total=
+Number(d.gp||0)+
+Number(d.robi||0)+
+Number(d.banglalink||0)+
+Number(d.airtel||0);
 
-let box=document.getElementById("history");
-
-box.innerHTML="";
-
-total=0;
-
-if(!data)return;
-
-Object.values(data).reverse().forEach(item=>{
-
-total+=item.profit;
-
-box.innerHTML+=`
-
-<div class="history-card">
-
-<h3>${item.name}</h3>
-
-<p>পরিমাণ : ${item.qty}</p>
-
-<p>লাভ : ৳${item.profit}</p>
-
-<p>${item.date}</p>
-
-</div>
-
-`;
+document.getElementById("totalBalance").innerHTML="৳"+total;
 
 });
 
-document.getElementById("todayProfit").innerHTML="৳"+total;
+onValue(ref(rtdb,"sellHistory"),(snap)=>{
 
-document.getElementById("monthProfit").innerHTML="৳"+total;
+let profit=0;
 
-document.getElementById("totalProfit").innerHTML="৳"+total;
+let sell=0;
+
+snap.forEach(item=>{
+
+profit+=Number(item.val().profit||0);
+
+sell+=Number(item.val().amount||0);
+
+});
+
+document.getElementById("totalProfit").innerHTML="৳"+profit;
+
+document.getElementById("totalSell").innerHTML="৳"+sell;
+
+});
+
+onValue(ref(rtdb,"loadHistory"),(snap)=>{
+
+let load=0;
+
+snap.forEach(item=>{
+
+load+=Number(item.val().amount||0);
+
+});
+
+document.getElementById("totalLoad").innerHTML="৳"+load;
 
 });
