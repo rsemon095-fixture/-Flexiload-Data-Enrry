@@ -1,5 +1,23 @@
-setTimeout(function(){
+let percent = 0;
 
-window.location.href="dashboard.html";
+const text = document.getElementById("percent");
 
-},3000);
+const timer = setInterval(() => {
+
+    percent++;
+
+    text.innerHTML = percent + "%";
+
+    if (percent >= 100) {
+
+        clearInterval(timer);
+
+        setTimeout(() => {
+
+            window.location.href = "dashboard.html";
+
+        }, 400);
+
+    }
+
+}, 30);
