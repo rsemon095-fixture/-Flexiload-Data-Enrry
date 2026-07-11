@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Sell Entry</title>
+
+<link rel="stylesheet" href="../css/load.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Sell Entry</h2>
+
+<select id="operator">
+
+<option value="gp">GP</option>
+
+<option value="robi">Robi</option>
+
+<option value="banglalink">Banglalink</option>
+
+<option value="airtel">Airtel</option>
+
+</select>
+
+<input
+type="number"
+id="sellAmount"
+placeholder="Sell Amount">
+
+<input
+type="number"
+id="profit"
+placeholder="Profit">
+
+<button id="sellBtn">
+
+SAVE SELL
+
+</button>
+
+<button onclick="location.href='../dashboard.html'">
+
+⬅ Dashboard
+
+</button>
+
+</div>
+
+<script type="module" src="../js/sell.js"></script>
+
+</body>
+
+</html>
