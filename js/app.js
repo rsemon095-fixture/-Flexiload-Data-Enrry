@@ -1,61 +1,35 @@
-import { rtdb } from "./firebase.js";
+const fill = document.getElementById("loadingFill");
+const percent = document.getElementById("percent");
+const text = document.getElementById("loadingText");
 
-import {
-ref,
-get,
-update,
-push
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+const messages = [
+    "Initializing System...",
+    "Loading Database...",
+    "Connecting Firebase...",
+    "Loading Dashboard...",
+    "Almost Ready..."
+];
 
-const op = new URLSearchParams(location.search).get("op");
+let p = 0;
 
-const title = document.getElementById("title");
-const logo = document.getElementById("logo");
+const timer = setInterval(() => {
 
-const images = {
-gp:"../assets/logo/gp-png.png",
-robi:"../assets/logo/robi-png.png",
-banglalink:"../assets/logo/banglalink-png.png",
-airtel:"../assets/logo/airtel-png.png"
-};
+    p++;
 
-title.innerHTML = op.toUpperCase()+" Balance Add";
-logo.src = images[op];
+    fill.style.width = p + "%";
+    percent.innerHTML = p + "%";
 
-document.getElementById("saveBtn").onclick = async ()=>{
+    if (p == 20) text.innerHTML = messages[1];
+    if (p == 40) text.innerHTML = messages[2];
+    if (p == 60) text.innerHTML = messages[3];
+    if (p == 80) text.innerHTML = messages[4];
 
-const amount = Number(document.getElementById("amount").value);
+    if (p >= 100) {
+        clearInterval(timer);
 
-if(amount<=0){
-alert("Amount লিখুন");
-return;
-}
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 500);
+    }
 
-const snap = await get(ref(rtdb,"balance"));
-
-let data = snap.exists() ? snap.val() : {};
-
-data.gp = Number(data.gp||0);
-data.robi = Number(data.robi||0);
-data.banglalink = Number(data.banglalink||0);
-data.airtel = Number(data.airtel||0);
-
-data[op]+=amount;
-
-await update(ref(rtdb,"balance"),data);
-
-await push(ref(rtdb,"loadHistory"),{
-
-operator:op,
-
-amount:amount,
-
-date:new Date().toLocaleString()
-
-});
-
-alert("✅ Balance Added");
-
-location.href="../dashboard.html";
-
-}
+}, 30);
