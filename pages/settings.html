@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Settings</title>
+
+<link rel="stylesheet" href="../css/product.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>⚙️ Settings</h2>
+
+<input type="password" id="oldPin" placeholder="বর্তমান PIN">
+
+<input type="password" id="newPin" placeholder="নতুন ৪ সংখ্যার PIN">
+
+<button onclick="changePin()">PIN Change</button>
+
+<button onclick="backupData()">Firebase Backup</button>
+
+<button onclick="restoreData()">Firebase Restore</button>
+
+</div>
+
+<script type="module" src="../js/settings.js"></script>
+
+</body>
+</html>
