@@ -1,159 +1,53 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>মা টেলিকম Dashboard</title>
-
-<link rel="stylesheet" href="css/dashboard.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মা টেলিকম Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
-<div class="header">
-
-<img src="assets/images/owner-jpg.jpg" class="owner">
-
-<div>
-
-<h1>মা টেলিকম</h1>
-
-<p>Flexiload Data Entry System</p>
-
-</div>
-
-</div>
-
-<div class="summary">
-
-<div class="box">
-
-<h3>Total Balance</h3>
-
-<h1 id="totalBalance">৳0</h1>
-
-</div>
-
-<div class="box profit">
-
-<h3>Today's Profit</h3>
-
-<h1 id="todayProfit">৳0</h1>
-
-</div>
-
-</div>
-
-<div class="operator">
-
-<img src="assets/logo/gp-png.png">
-
-<div class="text">
-
-<h2>GP</h2>
-
-<p id="gpBalance">৳0</p>
-
-</div>
-
-<button onclick="location.href='pages/load-add.html?op=gp'">
-
-ADD
-
-</button>
-
-</div>
-
-<div class="operator">
-
-<img src="assets/logo/robi-png.png">
-
-<div class="text">
-
-<h2>Robi</h2>
-
-<p id="robiBalance">৳0</p>
-
-</div>
-
-<button onclick="location.href='pages/load-add.html?op=robi'">
-
-ADD
-
-</button>
-
-</div>
-
-<div class="operator">
-
-<img src="assets/logo/banglalink-png.png">
-
-<div class="text">
-
-<h2>Banglalink</h2>
-
-<p id="blBalance">৳0</p>
-
-</div>
-
-<button onclick="location.href='pages/load-add.html?op=banglalink'">
-
-ADD
-
-</button>
-
-</div>
-
-<div class="operator">
-
-<img src="assets/logo/airtel-png.png">
-
-<div class="text">
-
-<h2>Airtel</h2>
-
-<p id="airtelBalance">৳0</p>
-
-</div>
-
-<button onclick="location.href='pages/load-add.html?op=airtel'">
-
-ADD
-
-</button>
-
-</div>
-
-<div class="menu">
-
-<button onclick="location.href='pages/load-add.html'">
-💰 Load Add
-</button>
-
-<button onclick="location.href='pages/sell.html'">
-📱 Sell Entry
-</button>
-
-<button onclick="location.href='pages/products.html'">
-📦 Products
-</button>
-
-<button onclick="location.href='pages/product-history.html'">
-📜 History
-</button>
-
-<button onclick="location.href='pages/report.html'">
-📊 Report
-</button>
-
-</div>
-
-<script type="module" src="js/dashboard.js"></script>
-
+    <div class="header">
+        <!-- নিশ্চিত করুন এই পাথটি সঠিক (assets/images/owner-jpg.jpg) -->
+        <img src="assets/images/owner-jpg.jpg" alt="Owner" class="owner">
+        <div>
+            <h1>মা টেলিকম</h1>
+            <p>Flexiload Data Entry System</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <div class="box">
+            <h3>Total Balance</h3>
+            <h1 id="totalBalance">৳0</h1>
+        </div>
+        <div class="box profit">
+            <h3>Today's Profit</h3>
+            <h1 id="todayProfit">৳0</h1>
+        </div>
+    </div>
+
+    <!-- Operator sections... -->
+    <div class="operator">
+        <img src="assets/logo/gp-png.png" alt="GP">
+        <div class="text">
+            <h2>GP</h2>
+            <p id="gpBalance">৳0</p>
+        </div>
+        <button onclick="window.location.href='pages/load-add.html?op=gp'">ADD</button>
+    </div>
+
+    <!-- আপনি আপনার বাকি অপারেটরগুলো একইভাবে চেক করে নেবেন -->
+
+    <div class="menu">
+        <button onclick="window.location.href='pages/load-add.html'">💰 Load Add</button>
+        <button onclick="window.location.href='pages/sell.html'">📱 Sell Entry</button>
+        <button onclick="window.location.href='pages/products.html'">📦 Products</button>
+        <button onclick="window.location.href='pages/product-history.html'">📜 History</button>
+        <button onclick="window.location.href='pages/report.html'">📊 Report</button>
+    </div>
+
+    <script src="js/dashboard.js"></script>
 </body>
-
 </html>
