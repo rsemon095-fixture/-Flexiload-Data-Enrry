@@ -1,32 +1,29 @@
-import { saveBalance } from "./firebase-balance.js";
+function saveBalance(){
 
-const params = new URLSearchParams(window.location.search);
-const op = params.get("op");
+let gp=parseFloat(document.getElementById("gp").value)||0;
 
-if (op) {
-    document.getElementById("selectedOperator").innerHTML =
-        "Operator : " + op;
+let robi=parseFloat(document.getElementById("robi").value)||0;
+
+let bl=parseFloat(document.getElementById("bl").value)||0;
+
+let airtel=parseFloat(document.getElementById("airtel").value)||0;
+
+let data={
+
+gp:gp,
+
+robi:robi,
+
+banglalink:bl,
+
+airtel:airtel
+
+};
+
+localStorage.setItem("flexiloadBalance",JSON.stringify(data));
+
+alert("✅ Balance Save হয়েছে");
+
+location.href="dashboard.html";
+
 }
-
-function saveBalanceData() {
-
-    let gp = parseFloat(document.getElementById("gp").value) || 0;
-    let robi = parseFloat(document.getElementById("robi").value) || 0;
-    let bl = parseFloat(document.getElementById("bl").value) || 0;
-    let airtel = parseFloat(document.getElementById("airtel").value) || 0;
-
-    let data = {
-        gp: gp,
-        robi: robi,
-        banglalink: bl,
-        airtel: airtel
-    };
-
-    saveBalance(data);
-
-    alert("✅ Balance Save হয়েছে");
-
-    window.location.href = "../dashboard.html";
-}
-
-window.saveBalance = saveBalanceData;
