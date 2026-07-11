@@ -19,7 +19,7 @@ function saveBalanceData() {
 
     alert("✅ Balance Save হয়েছে");
 
-    window.location.href = "dashboard.html";
+window.location.href = "../dashboard.html";
 }
 
 window.saveBalance = saveBalanceData;
