@@ -1,41 +1,61 @@
-const fill = document.getElementById("loadingFill");
-const percent = document.getElementById("percent");
-const text = document.getElementById("loadingText");
+import { rtdb } from "./firebase.js";
 
-const msg = [
-"Initializing System...",
-"Loading Database...",
-"Connecting Firebase...",
-"Loading User Data...",
-"Preparing Dashboard...",
-"Almost Ready..."
-];
+import {
+ref,
+get,
+update,
+push
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-let p = 0;
+const op = new URLSearchParams(location.search).get("op");
 
-const timer = setInterval(() => {
+const title = document.getElementById("title");
+const logo = document.getElementById("logo");
 
-    p++;
+const images = {
+gp:"../assets/logo/gp-png.png",
+robi:"../assets/logo/robi-png.png",
+banglalink:"../assets/logo/banglalink-png.png",
+airtel:"../assets/logo/airtel-png.png"
+};
 
-    fill.style.width = p + "%";
-    percent.innerHTML = p + "%";
+title.innerHTML = op.toUpperCase()+" Balance Add";
+logo.src = images[op];
 
-    if (p == 15) text.innerHTML = msg[1];
-    if (p == 35) text.innerHTML = msg[2];
-    if (p == 55) text.innerHTML = msg[3];
-    if (p == 75) text.innerHTML = msg[4];
-    if (p == 95) text.innerHTML = msg[5];
+document.getElementById("saveBtn").onclick = async ()=>{
 
-    if (p >= 100) {
+const amount = Number(document.getElementById("amount").value);
 
-        clearInterval(timer);
+if(amount<=0){
+alert("Amount লিখুন");
+return;
+}
 
-        setTimeout(() => {
+const snap = await get(ref(rtdb,"balance"));
 
-            window.location.href = "pin.html";
+let data = snap.exists() ? snap.val() : {};
 
-        }, 500);
+data.gp = Number(data.gp||0);
+data.robi = Number(data.robi||0);
+data.banglalink = Number(data.banglalink||0);
+data.airtel = Number(data.airtel||0);
 
-    }
+data[op]+=amount;
 
-}, 30);
+await update(ref(rtdb,"balance"),data);
+
+await push(ref(rtdb,"loadHistory"),{
+
+operator:op,
+
+amount:amount,
+
+date:new Date().toLocaleString()
+
+});
+
+alert("✅ Balance Added");
+
+location.href="../dashboard.html";
+
+}
