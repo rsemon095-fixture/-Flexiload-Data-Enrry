@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Management</title>
+
+<link rel="stylesheet" href="../css/products.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📦 Product Management</h2>
+
+<div class="card">
+
+<label>Product Name</label>
+
+<input
+type="text"
+id="productName"
+placeholder="Product Name">
+
+</div>
+
+<div class="card">
+
+<label>Stock Quantity</label>
+
+<input
+type="number"
+id="stock"
+placeholder="0">
+
+</div>
+
+<div class="card">
+
+<label>Buy Price</label>
+
+<input
+type="number"
+id="buyPrice"
+placeholder="৳">
+
+</div>
+
+<div class="card">
+
+<label>Sell Price</label>
+
+<input
+type="number"
+id="sellPrice"
+placeholder="৳">
+
+</div>
+
+<button onclick="saveProduct()">
+
+SAVE PRODUCT
+
+</button>
+
+<hr>
+
+<h3>📋 Product List</h3>
+
+<div id="productList"></div>
+
+</div>
+
+<script src="../js/products.js"></script>
+
+</body>
+
+</html>
