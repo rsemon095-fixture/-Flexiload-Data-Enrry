@@ -14,7 +14,9 @@ function saveData() {
 
 // Load
 function loadData() {
+import { loadBalance } from "./firebase-balance.js";
 
+loadBalance();
     const data = localStorage.getItem("flexiloadBalance");
 
     if (data) {
