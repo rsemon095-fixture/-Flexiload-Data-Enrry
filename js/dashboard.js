@@ -1,54 +1,37 @@
-// ====== Flexiload Dashboard ======
+import { rtdb } from "./firebase.js";
 
-let balance = {
-    gp: 0,
-    robi: 0,
-    banglalink: 0,
-    airtel: 0
-};
+import {
+  ref,
+  onValue
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-// Save
-function saveData() {
-    localStorage.setItem("flexiloadBalance", JSON.stringify(balance));
-}
+const balanceRef = ref(rtdb, "balance");
 
-// Load
-function loadData() {
-import { loadBalance } from "./firebase-balance.js";
+onValue(balanceRef, (snapshot) => {
 
-loadBalance();
-    const data = localStorage.getItem("flexiloadBalance");
+    const data = snapshot.val();
 
-    if (data) {
-        balance = JSON.parse(data);
-    }
+    if (!data) return;
 
-    updateUI();
-}
+    document.getElementById("gpBalance").innerHTML =
+        "৳" + (data.gp || 0);
 
-// UI Update
-function updateUI() {
+    document.getElementById("robiBalance").innerHTML =
+        "৳" + (data.robi || 0);
 
-    document.getElementById("gpBalance").innerText =
-        "৳" + balance.gp;
+    document.getElementById("blBalance").innerHTML =
+        "৳" + (data.banglalink || 0);
 
-    document.getElementById("robiBalance").innerText =
-        "৳" + balance.robi;
-
-    document.getElementById("blBalance").innerText =
-        "৳" + balance.banglalink;
-
-    document.getElementById("airtelBalance").innerText =
-        "৳" + balance.airtel;
+    document.getElementById("airtelBalance").innerHTML =
+        "৳" + (data.airtel || 0);
 
     let total =
-        balance.gp +
-        balance.robi +
-        balance.banglalink +
-        balance.airtel;
+        (data.gp || 0) +
+        (data.robi || 0) +
+        (data.banglalink || 0) +
+        (data.airtel || 0);
 
-    document.getElementById("totalBalance").innerText =
+    document.getElementById("totalBalance").innerHTML =
         "৳" + total;
-}
 
-loadData();
+});
