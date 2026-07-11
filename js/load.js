@@ -1,5 +1,4 @@
-import { rtdb } from "./firebase.js";
-
+import { rtdb } from "../js/firebase.js";
 import {
 ref,
 get,
