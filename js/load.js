@@ -1,29 +1,65 @@
-function saveBalance(){
+import { rtdb } from "./firebase.js";
 
-let gp=parseFloat(document.getElementById("gp").value)||0;
+import {
+ref,
+get,
+set,
+push
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-let robi=parseFloat(document.getElementById("robi").value)||0;
+const params = new URLSearchParams(window.location.search);
+const op = params.get("op");
 
-let bl=parseFloat(document.getElementById("bl").value)||0;
+const logo = document.getElementById("logo");
+const operatorName = document.getElementById("operatorName");
 
-let airtel=parseFloat(document.getElementById("airtel").value)||0;
-
-let data={
-
-gp:gp,
-
-robi:robi,
-
-banglalink:bl,
-
-airtel:airtel
-
+const logos = {
+gp:"../assets/logo/gp-png.png",
+robi:"../assets/logo/robi-png.png",
+banglalink:"../assets/logo/banglalink-png.png",
+airtel:"../assets/logo/airtel-png.png"
 };
 
-localStorage.setItem("flexiloadBalance",JSON.stringify(data));
+logo.src = logos[op];
+operatorName.innerHTML = op.toUpperCase();
 
-alert("✅ Balance Save হয়েছে");
+window.saveBalance = async function(){
 
-location.href="dashboard.html";
+const amount = Number(document.getElementById("amount").value);
+
+if(amount<=0){
+alert("টাকার পরিমাণ লিখুন");
+return;
+}
+
+const balanceRef = ref(rtdb,"balance/"+op);
+
+const snap = await get(balanceRef);
+
+let old = 0;
+
+if(snap.exists()){
+old = Number(snap.val());
+}
+
+const total = old + amount;
+
+await set(balanceRef,total);
+
+await push(ref(rtdb,"history/load"),{
+
+operator:op,
+
+amount:amount,
+
+balance:total,
+
+date:new Date().toLocaleString()
+
+});
+
+alert("✅ Balance Added Successfully");
+
+location.href="../dashboard.html";
 
 }
