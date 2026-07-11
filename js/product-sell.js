@@ -61,7 +61,13 @@ await update(ref(rtdb, "products/" + id), {
 stock: p.stock - qty
 
 });
+let remain = p.stock - qty;
 
+if(remain <= 5){
+
+alert("📦 " + p.name + " এর স্টক শেষের দিকে (" + remain + " টি বাকি)");
+
+}
 await set(push(ref(rtdb, "productHistory")), {
 
 name: p.name,
